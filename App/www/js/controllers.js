@@ -6,15 +6,16 @@
     .controller('SiteDetailCtrl', SiteDetailCtrl)
     .controller('ConfigCtrl', ConfigCtrl);
 
-  MapCtrl.$inject = ['$scope', '$ionicLoading', 'uiGmapGoogleMapApi', '$timeout', '$cordovaGeolocation', '$ionicModal', 'RESTService'];
+  MapCtrl.$inject = ['$scope', '$ionicLoading', 'uiGmapGoogleMapApi', '$timeout',
+    '$cordovaGeolocation', '$ionicModal', 'RESTService', '$cordovaCamera', '$cordovaActionSheet'];
   ConfigCtrl.$inject = ['$scope'];
   SitesCtrl.$inject = ['$scope', 'Chats'];
   SiteDetailCtrl.$inject = ['$scope', '$stateParams', 'Chats'];
 
   function MapCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout,
-                   $cordovaGeolocation, $ionicModal, RESTService) {
+                   $cordovaGeolocation, $ionicModal, RESTService, $cordovaCamera, $cordovaActionSheet) {
 
-    RESTService.all('categories', null, function(response){
+    RESTService.all('categories', null, function (response) {
       $scope.categories = response.results;
       $scope.categorySelected = response.results[0];
     });
@@ -47,6 +48,54 @@
       $scope.infoVisible = false;
     };
 
+    $scope.camera = function () {
+      action_sheet();
+    };
+
+    function action_sheet() {
+      var options = {
+        title: 'que quieres hacer?',
+        buttonLabels: ['Tomar una foto', 'Escoger una foto'],
+        addCancelButtonWithLabel: 'Cancelar',
+        androidEnableCancelButton: true,
+        winphoneEnableCancelButton: true
+      };
+
+      $cordovaActionSheet.show(options)
+      .then(function(btnIndex) {
+        var index = btnIndex;
+        if(index == 1){
+          take_photo();
+        }
+      });
+    }
+
+    function find_photo(){
+
+    }
+
+    function take_photo() {
+      var options = {
+        quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        allowEdit: true,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 100,
+        targetHeight: 100,
+        popoverOptions: CameraPopoverOptions,
+        saveToPhotoAlbum: false,
+        correctOrientation: true
+      };
+
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+        var image = document.getElementById('picture');
+        image.src = "data:image/jpeg;base64," + imageData;
+        console.log(image);
+      }, function (err) {
+        // error
+      });
+    }
 
     initMap();
 

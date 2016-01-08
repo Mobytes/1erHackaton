@@ -53,7 +53,7 @@
 <script id="modal.html" type="text/ng-template">
   <div class="modal">
     <ion-header-bar>
-      <h1 class="title">Nuevo Sitio</h1>
+      <h1 class="title">Agregar </h1>
       <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close"></span></div>
     </ion-header-bar>
     <ion-content>
@@ -82,7 +82,8 @@
           </select>
         </label>
 
-        <button class="Form__photo">
+        <button class="Form__photo" ng-click="camera()">
+          <img id="picture" alt="">
         </button>
 
       </div>
