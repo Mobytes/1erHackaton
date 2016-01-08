@@ -6,16 +6,19 @@
     .controller('SiteDetailCtrl', SiteDetailCtrl)
     .controller('ConfigCtrl', ConfigCtrl);
 
-  MapCtrl.$inject = ['$scope', '$state', '$ionicLoading', 'uiGmapGoogleMapApi', '$timeout', 'AuthFactory',
-    '$cordovaGeolocation', '$ionicModal', 'RESTService', '$cordovaCamera', '$cordovaActionSheet'];
+  MapCtrl.$inject = ['$scope', '$state', '$ionicLoading', 'uiGmapGoogleMapApi', '$timeout', 'AuthFactory', 'URL',
+    '$cordovaGeolocation', '$ionicModal', 'RESTService', '$cordovaCamera', '$cordovaActionSheet', 'UploadFactory'];
   ConfigCtrl.$inject = ['$scope'];
   SitesCtrl.$inject = ['$scope', 'Chats'];
   SiteDetailCtrl.$inject = ['$scope', '$stateParams', 'Chats'];
 
-  function MapCtrl($scope, $state, $ionicLoading, uiGmapGoogleMapApi, $timeout, AuthFactory,
-                   $cordovaGeolocation, $ionicModal, RESTService, $cordovaCamera, $cordovaActionSheet) {
+  function MapCtrl($scope, $state, $ionicLoading, uiGmapGoogleMapApi, $timeout, AuthFactory, URL,
+                   $cordovaGeolocation, $ionicModal, RESTService, $cordovaCamera, $cordovaActionSheet, UploadFactory) {
+
+    var file_image = null;
 
     $scope.sites = {};
+
 
     RESTService.all('categories', null, function (response) {
       $scope.categories = response.results;
@@ -92,6 +95,7 @@
       };
 
       $cordovaCamera.getPicture(options).then(function (imageData) {
+        file_image = imageData;
         var image = document.getElementById('picture');
         image.src = "data:image/jpeg;base64," + imageData;
         console.log(image);
@@ -115,9 +119,9 @@
       };
 
       $cordovaCamera.getPicture(options).then(function (imageData) {
+        file_image = imageData;
         var image = document.getElementById('picture');
         image.src = "data:image/jpeg;base64," + imageData;
-        console.log(image);
       }, function (err) {
         // error
       });
@@ -209,6 +213,18 @@
       $scope.saveSite = function () {
         $scope.sites.category = $scope.categorySelected.id;
         $scope.sites.creator_by = AuthFactory.getUserId();
+
+        console.log(JSON.stringify(file_image));
+
+        //UploadFactory.uploadImagePost(URL.ROOT+'/api/v1/sites', file_image, $scope.sites, function (response) {
+        //  console.log(response)
+        //  //success
+        //}, function (evt) {
+        //  //pre
+        //  file_image.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        //}, function (error) {
+        //  //error
+        //});
         RESTService.save('sites', $scope.sites, function (response) {
           $scope.modal.hide();
           $state.reload();
