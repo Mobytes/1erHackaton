@@ -4,8 +4,11 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="Login">
+<ion-view view-title="Login" >
   <ion-content class="padding" style="background: #11c1f3;">
+    <figure class="Login__imgContainer">
+      <img class="Login__img" src="../img/icon_digitalizame.png" alt="">
+    </figure>
     <div class="list">
       <label class="item item-input">
         <span class="input-label">Username</span>
@@ -16,9 +19,12 @@
         <input type="password" placeholder="Contraseña">
       </label>
     </div>
-    <button class="button button-block button-calm">
+    <button class="button button-block button-balanced">
       Login
     </button>
+    <div class="text-center">
+      <a class="color-white bolder" href="">Registrate</a>
+    </div>
 
   </ion-content>
 </ion-view>

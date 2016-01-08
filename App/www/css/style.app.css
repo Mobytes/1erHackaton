@@ -12141,6 +12141,12 @@ a.button {
 .modal-backdrop {
   z-index: 99999; }
 
+.color-white {
+  color: white; }
+
+.bolder {
+  font-weight: bold; }
+
 #googleMap,
 .angular-google-map,
 .angular-google-map-container {
@@ -12225,3 +12231,12 @@ a.button {
 
 .Form__input {
   font-size: 1rem !important; }
+
+.Login__imgContainer {
+  text-align: center;
+  padding: 0;
+  margin-top: 3rem;
+  margin-bottom: 3rem; }
+
+.Login__img {
+  width: 50%; }
