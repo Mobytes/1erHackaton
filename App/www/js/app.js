@@ -43,7 +43,7 @@
       }
 
       $rootScope.$on("$locationChangeSuccess", function (evt) {
-        if (!$state.is('login') || !$state.is('register')) {
+        if (!$state.is('login')) {
           if (AuthFactory.getUser() == null) {
             $state.go('login', {reload: true});
           }
