@@ -52,6 +52,9 @@
       action_sheet();
     };
 
+    initMap();
+
+    //region TAKE AND SELECT PHOTO
     function action_sheet() {
       var options = {
         title: 'que quieres hacer?',
@@ -74,13 +77,13 @@
 
     function find_photo() {
       var options = {
-        quality: 50,
+        quality: 100,
         destinationType: Camera.DestinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
         allowEdit: true,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 100,
-        targetHeight: 100,
+        //targetWidth: 100,
+        //targetHeight: 100,
         popoverOptions: CameraPopoverOptions,
         saveToPhotoAlbum: false,
         correctOrientation: true
@@ -97,13 +100,13 @@
 
     function take_photo() {
       var options = {
-        quality: 50,
+        quality: 100,
         destinationType: Camera.DestinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.CAMERA,
         allowEdit: true,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 100,
-        targetHeight: 100,
+        //targetWidth: 100,
+        //targetHeight: 100,
         popoverOptions: CameraPopoverOptions,
         saveToPhotoAlbum: false,
         correctOrientation: true
@@ -117,14 +120,13 @@
         // error
       });
     }
-
-    initMap();
+    //endregion
 
     //region INIT MAP
     function initMap() {
 
       $ionicLoading.show({
-        template: 'Loading...'
+        template: 'Cargando...'
       });
 
       uiGmapGoogleMapApi.then(function (maps) {
@@ -181,12 +183,12 @@
           dragend: function (marker, eventName, args) {
             var lat = marker.getPosition().lat();
             var lon = marker.getPosition().lng();
-            $scope.marker.options = {
-              draggable: true,
-              labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
-              labelAnchor: "100 0",
-              labelClass: "marker-labels"
-            };
+            //$scope.marker.options = {
+            //  draggable: true,
+            //  labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
+            //  labelAnchor: "100 0",
+            //  labelClass: "marker-labels"
+            //};
           },
           dblclick: function (marker, eventName, args) {
             var lat = marker.getPosition().lat();
