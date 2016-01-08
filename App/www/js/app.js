@@ -4,6 +4,7 @@
   angular.module('app', [
       'ionic',
       'app.api.constants',
+      'app.auth.service',
       'app.api.services',
       'app.api.rest',
       'app.controllers',
@@ -22,10 +23,10 @@
     })
     .config(Config);
 
-  Run.$inject = ['$ionicPlatform'];
+  Run.$inject = ['$rootScope', '$state', '$ionicPlatform', 'AuthFactory'];
   Config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-  function Run($ionicPlatform) {
+  function Run($rootScope, $state, $ionicPlatform, AuthFactory) {
     $ionicPlatform.ready(function () {
 
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -39,6 +40,19 @@
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
+
+      $rootScope.$on("$locationChangeSuccess", function (evt) {
+        if (!$state.is('login') || !$state.is('register')) {
+          if (AuthFactory.getUser() == null) {
+            $state.go('login', {reload: true});
+          }
+        } else {
+          if (AuthFactory.getUser() != null) {
+            $state.go('app.map');
+          }
+        }
+
+      });
     });
   }
 
@@ -99,13 +113,23 @@
       .state('login', {
         url: '/login',
         templateUrl: 'templates/login.html',
-        controller: 'LoginCtrl'
+        controller: 'LoginCtrl',
+        onEnter: ['$state', 'AuthFactory', function ($state, AuthFactory) {
+          if (AuthFactory.getUser() != null) {
+            $state.go('app.map');
+          }
+        }]
       })
 
       .state('register', {
         url: '/register',
         templateUrl: 'templates/register.html',
-        controller: 'RegisterCtrl'
+        controller: 'RegisterCtrl',
+        onEnter: ['$state', 'AuthFactory', function ($state, AuthFactory) {
+          if (AuthFactory.getUser() != null) {
+            $state.go('app.map');
+          }
+        }]
       });
 
     // if none of the above states are matched, use this as the fallback

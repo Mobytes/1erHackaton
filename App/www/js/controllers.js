@@ -6,13 +6,13 @@
     .controller('SiteDetailCtrl', SiteDetailCtrl)
     .controller('ConfigCtrl', ConfigCtrl);
 
-  MapCtrl.$inject = ['$scope', '$ionicLoading', 'uiGmapGoogleMapApi', '$timeout',
+  MapCtrl.$inject = ['$scope', '$state', '$ionicLoading', 'uiGmapGoogleMapApi', '$timeout', 'AuthFactory',
     '$cordovaGeolocation', '$ionicModal', 'RESTService', '$cordovaCamera', '$cordovaActionSheet'];
   ConfigCtrl.$inject = ['$scope'];
   SitesCtrl.$inject = ['$scope', 'Chats'];
   SiteDetailCtrl.$inject = ['$scope', '$stateParams', 'Chats'];
 
-  function MapCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout,
+  function MapCtrl($scope, $state, $ionicLoading, uiGmapGoogleMapApi, $timeout, AuthFactory,
                    $cordovaGeolocation, $ionicModal, RESTService, $cordovaCamera, $cordovaActionSheet) {
 
     $scope.sites = {};
@@ -122,6 +122,7 @@
         // error
       });
     }
+
     //endregion
 
     //region INIT MAP
@@ -207,8 +208,10 @@
 
       $scope.saveSite = function () {
         $scope.sites.category = $scope.categorySelected.id;
-        RESTService.save('sites', $scope.sites, function(response){
-
+        $scope.sites.creator_by = AuthFactory.getUserId();
+        RESTService.save('sites', $scope.sites, function (response) {
+          $scope.modal.hide();
+          $state.reload();
         });
       }
     };

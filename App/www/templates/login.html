@@ -14,14 +14,14 @@
       </figure>
       <label class="item item-input">
         <span class="input-label">Username</span>
-        <input class="Login__input" type="text" placeholder="Username" autofocus>
+        <input class="Login__input" type="text" placeholder="Username" autofocus ng-model="user.username">
       </label>
       <label class="item item-input">
         <span class="input-label">Contraseña</span>
-        <input class="Login__input" type="password" placeholder="Contraseña">
+        <input class="Login__input" type="password" placeholder="Contraseña" ng-model="user.password">
       </label>
     </div>
-    <button class="button button-block button-balanced">
+    <button class="button button-block button-balanced" ng-click="login()">
       Login
     </button>
     <div class="text-center">

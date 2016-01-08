@@ -3,9 +3,9 @@
     angular.module('app.api.services', ['ngResource'])
         .factory('ApiService', ApiService);
 
-    ApiService.$inject = ['$resource', 'URL'];
+    ApiService.$inject = ['$resource', 'URL', 'AuthFactory'];
 
-    function ApiService($resource, URL) {
+    function ApiService($resource, URL, AuthFactory) {
 
         var service = {
             instance: instance
