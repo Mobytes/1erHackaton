@@ -16,9 +16,12 @@ class RatingSerializer(serializers.ModelSerializer):
 
 
 class SiteSerializer(serializers.ModelSerializer):
+    icon = serializers.ReadOnlyField(source='get_category_icon', read_only=True)
+
     class Meta:
         model = Site
-        fields = ('description', 'detail', 'latitude', 'longitude', 'tags', 'category')
+        fields = ('id', 'description', 'detail', 'latitude', 'longitude',
+                  'tags', 'category', 'creator_by', 'icon')
 
 
 class PictureSerializer(serializers.ModelSerializer):
@@ -46,3 +49,4 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+

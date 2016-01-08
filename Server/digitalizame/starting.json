@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "description": "Hospedaje",
-      "icon": "img/hospedaje.png",
+      "icon": "static/img/hospedaje.png",
       "created_at": "2015-12-26 18:07:42",
       "updated_at": "2015-12-26 18:07:42"
     }
@@ -14,7 +14,7 @@
     "pk": 2,
     "fields": {
       "description": "Restaurante",
-      "icon": "img/restaurante.png",
+      "icon": "static/img/restaurante.png",
       "created_at": "2015-12-26 18:07:42",
       "updated_at": "2015-12-26 18:07:42"
     }
@@ -24,7 +24,7 @@
     "pk": 3,
     "fields": {
       "description": "Grifo",
-      "icon": "img/grifo.png",
+      "icon": "static/img/grifo.png",
       "created_at": "2015-12-26 18:07:42",
       "updated_at": "2015-12-26 18:07:42"
     }
@@ -34,7 +34,7 @@
     "pk": 4,
     "fields": {
       "description": "Parque",
-      "icon": "img/parque.png",
+      "icon": "static/img/parque.png",
       "created_at": "2015-12-26 18:07:42",
       "updated_at": "2015-12-26 18:07:42"
     }
@@ -44,7 +44,7 @@
     "pk": 5,
     "fields": {
       "description": "Tienda",
-      "icon": "img/tienda.png",
+      "icon": "static/img/tienda.png",
       "created_at": "2015-12-26 18:07:42",
       "updated_at": "2015-12-26 18:07:42"
     }
@@ -54,7 +54,7 @@
     "pk": 5,
     "fields": {
       "description": "Lugar Turístico",
-      "icon": "img/turistico.png",
+      "icon": "static/img/turistico.png",
       "created_at": "2015-12-26 18:07:42",
       "updated_at": "2015-12-26 18:07:42"
     }
@@ -64,7 +64,7 @@
     "pk": 5,
     "fields": {
       "description": "Otro",
-      "icon": "img/otros.png",
+      "icon": "static/img/otros.png",
       "created_at": "2015-12-26 18:07:42",
       "updated_at": "2015-12-26 18:07:42"
     }
