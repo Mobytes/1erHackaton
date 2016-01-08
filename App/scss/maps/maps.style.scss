@@ -1,7 +1,7 @@
 .btn__moresContainer{
   position: absolute;
   bottom: 1rem;
-  right: .5rem;
+  right: .9rem;
   font-size: 4rem;
   z-index: 1;
 }
@@ -30,18 +30,12 @@
     position: relative;
   }
   &__inputSearch{
-    width: 100%;
     margin: 0 auto;
-    border: 1px solid black !important;
-    padding: 0 0 0 1.9rem !important;
-    //border-radius: 20px;
+    border: 1px solid silver !important;
     margin-bottom: .3rem;
   }
   &__iconSearch
   {
-    position: absolute;
-    font-size: 1.5rem;
-    top: .3rem;
-    left: .4rem;
+    font-size: 1.3rem;
   }
 }

@@ -9,10 +9,16 @@
   <ion-content class="has-header">
     <div class="Map__Search">
       <form class="">
-        <span class="ion-ios-search Map__iconSearch"></span>
-        <input class="Map__inputSearch" type="text" placeholder="Qué deseas encontrar?">
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper Map__inputSearch">
+            <span class="ion-ios-search Map__iconSearch"></span>
+            <input type="text" placeholder="Qué deseas Buscar?">
+          </label>
+          <button class="button button-calm button-small Map__">
+            &nbsp; Buscar &nbsp;
+          </button>
+        </div>
       </form>
-
     </div>
 
     <div data-tap-disabled="true" id="googleMap">
