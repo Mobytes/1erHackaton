@@ -12238,8 +12238,18 @@ a.button {
   margin-top: 4rem;
   margin-bottom: 5rem; }
 
+.Login__imgContainer2 {
+  text-align: center;
+  padding: 0;
+  margin-top: 2rem;
+  margin-bottom: 4rem; }
+
 .Login__img {
   width: 50%; }
 
 .Login__input {
   font-size: 1rem !important; }
+
+.Login__register {
+  display: inline-block;
+  padding-top: 1rem; }
