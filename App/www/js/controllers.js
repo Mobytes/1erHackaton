@@ -1,157 +1,169 @@
-angular.module('starter.controllers', [])
-  .controller('MapCtrl', MapCtrl)
-  .controller('SitesCtrl', SitesCtrl)
-  .controller('SiteDetailCtrl', SiteDetailCtrl)
-  .controller('ConfigCtrl', ConfigCtrl);
+(function () {
+  'use strict';
+  angular.module('app.controllers', [])
+    .controller('MapCtrl', MapCtrl)
+    .controller('SitesCtrl', SitesCtrl)
+    .controller('SiteDetailCtrl', SiteDetailCtrl)
+    .controller('ConfigCtrl', ConfigCtrl);
 
-MapCtrl.$inject = ['$scope', '$ionicLoading', 'uiGmapGoogleMapApi', '$timeout', '$cordovaGeolocation', '$ionicModal'];
-ConfigCtrl.$inject = ['$scope'];
-SitesCtrl.$inject = ['$scope', 'Chats'];
-SiteDetailCtrl.$inject = ['$scope', '$stateParams', 'Chats'];
+  MapCtrl.$inject = ['$scope', '$ionicLoading', 'uiGmapGoogleMapApi', '$timeout', '$cordovaGeolocation', '$ionicModal', 'RESTService'];
+  ConfigCtrl.$inject = ['$scope'];
+  SitesCtrl.$inject = ['$scope', 'Chats'];
+  SiteDetailCtrl.$inject = ['$scope', '$stateParams', 'Chats'];
 
-function MapCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout, $cordovaGeolocation, $ionicModal) {
+  function MapCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout,
+                   $cordovaGeolocation, $ionicModal, RESTService) {
 
-  $scope.refresh = function () {
-    console.log('refresh');
-  };
+    RESTService.all('categories', null, function(response){
+      $scope.categories = response.results;
+      $scope.categorySelected = response.results[0];
+    });
 
-  $scope.locate = function () {
-    initMap();
-  };
-  //$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+    $scope.refresh = function () {
+      console.log('refresh');
+    };
 
-  $scope.markers = [];
-  $scope.infoVisible = false;
-  $scope.infoBusiness = {};
+    $scope.locate = function () {
+      initMap();
+    };
 
-  // Initialize and show infoWindow for business
-  $scope.showInfo = function (marker, eventName, markerModel) {
-    $scope.infoBusiness = markerModel;
-    $scope.infoVisible = true;
-  };
+    $scope.showModal = function () {
+      $scope.modal.show();
+    };
+    //$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
 
-  // Hide infoWindow when 'x' is clicked
-  $scope.hideInfo = function () {
+    $scope.markers = [];
     $scope.infoVisible = false;
-  };
+    $scope.infoBusiness = {};
+
+    // Initialize and show infoWindow for business
+    $scope.showInfo = function (marker, eventName, markerModel) {
+      $scope.infoBusiness = markerModel;
+      $scope.infoVisible = true;
+    };
+
+    // Hide infoWindow when 'x' is clicked
+    $scope.hideInfo = function () {
+      $scope.infoVisible = false;
+    };
 
 
-  initMap();
+    initMap();
 
-  //region INIT MAP
-  function initMap() {
+    //region INIT MAP
+    function initMap() {
 
-    $ionicLoading.show({
-      template: 'Loading...'
-    });
-
-    uiGmapGoogleMapApi.then(function (maps) {
-      // Don't pass timeout parameter here; that is handled by setTimeout below
-      var posOptions = {enableHighAccuracy: false};
-      $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-        console.log("Got location: " + JSON.stringify(position));
-        $ionicLoading.hide();
-        initializeMap(position);
-      }, function (error) {
-        console.log(error);
-        $ionicLoading.hide();
-        initializeMap();
+      $ionicLoading.show({
+        template: 'Loading...'
       });
-    });
-  }
 
-  var initializeMap = function (position) {
-    if (!position) {
-      // Default to downtown Toronto
-      position = {
-        coords: {
-          latitude: 43.6722780,
-          longitude: -79.3745125
+      uiGmapGoogleMapApi.then(function (maps) {
+        // Don't pass timeout parameter here; that is handled by setTimeout below
+        var posOptions = {enableHighAccuracy: false};
+        $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+          console.log("Got location: " + JSON.stringify(position));
+          $ionicLoading.hide();
+          initializeMap(position);
+        }, function (error) {
+          console.log(error);
+          $ionicLoading.hide();
+          initializeMap();
+        });
+      });
+    }
+
+    var initializeMap = function (position) {
+      if (!position) {
+        // Default to downtown Toronto
+        position = {
+          coords: {
+            latitude: 43.6722780,
+            longitude: -79.3745125
+          }
+        };
+      }
+      // TODO add marker on current location
+
+      $scope.map = {
+        center: {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        },
+        zoom: 16
+      };
+
+      // Make info window for marker show up above marker
+      $scope.windowOptions = {
+        pixelOffset: {
+          height: -32,
+          width: 0
         }
       };
-    }
-    // TODO add marker on current location
 
-    $scope.map = {
-      center: {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      },
-      zoom: 16
-    };
-
-    // Make info window for marker show up above marker
-    $scope.windowOptions = {
-      pixelOffset: {
-        height: -32,
-        width: 0
-      }
-    };
-
-    $scope.marker = {
-      id: 0,
-      coords: {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      },
-      options: {draggable: true},
-      events: {
-        dragend: function (marker, eventName, args) {
-          var lat = marker.getPosition().lat();
-          var lon = marker.getPosition().lng();
-          $scope.marker.options = {
-            draggable: true,
-            labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
-            labelAnchor: "100 0",
-            labelClass: "marker-labels"
-          };
+      $scope.marker = {
+        id: 0,
+        coords: {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
         },
-        dblclick: function (marker, eventName, args) {
-          var lat = marker.getPosition().lat();
-          var lon = marker.getPosition().lng();
-
-          //open modal
-          $scope.modal.show();
-
+        options: {draggable: true},
+        events: {
+          dragend: function (marker, eventName, args) {
+            var lat = marker.getPosition().lat();
+            var lon = marker.getPosition().lng();
+            $scope.marker.options = {
+              draggable: true,
+              labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
+              labelAnchor: "100 0",
+              labelClass: "marker-labels"
+            };
+          },
+          dblclick: function (marker, eventName, args) {
+            var lat = marker.getPosition().lat();
+            var lon = marker.getPosition().lng();
+          }
         }
+      };
+
+      $ionicModal.fromTemplateUrl('modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function (modal) {
+        $scope.modal = modal;
+      });
+
+      $scope.saveSite = function () {
+        console.log('save');
       }
     };
 
-    $ionicModal.fromTemplateUrl('modal.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function (modal) {
-      $scope.modal = modal
-    });
+    //endregion
 
-  };
+    // Deal with case where user does not make a selection
+    $timeout(function () {
+      if (!$scope.map) {
+        console.log("No confirmation from user, using fallback");
+        initializeMap();
+      }
+    }, 5000);
 
-  //endregion
-
-  // Deal with case where user does not make a selection
-  $timeout(function () {
-    if (!$scope.map) {
-      console.log("No confirmation from user, using fallback");
-      initializeMap();
-    }
-  }, 5000);
-
-}
+  }
 
 
-function SitesCtrl($scope, Chats) {
-  $scope.chats = Chats.all();
-  $scope.remove = function (chat) {
-    Chats.remove(chat);
-  };
-}
+  function SitesCtrl($scope, Chats) {
+    $scope.chats = Chats.all();
+    $scope.remove = function (chat) {
+      Chats.remove(chat);
+    };
+  }
 
-function SiteDetailCtrl($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-}
+  function SiteDetailCtrl($scope, $stateParams, Chats) {
+    $scope.chat = Chats.get($stateParams.chatId);
+  }
 
-function ConfigCtrl($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
-}
+  function ConfigCtrl($scope) {
+    $scope.settings = {
+      enableFriends: true
+    };
+  }
+})();
