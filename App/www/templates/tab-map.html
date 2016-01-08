@@ -12,9 +12,9 @@
         <div class="item item-input-inset Map__inputSearchCont">
           <label class="item-input-wrapper Map__inputSearch">
             <span class="ion-ios-search Map__iconSearch"></span>
-            <input type="text" placeholder="Qué deseas Buscar?">
+            <input type="text" placeholder="Qué deseas Buscar?" ng-model="text" id="text">
           </label>
-          <button class="button button-calm button-small Map__btnCalm">
+          <button class="button button-calm button-small Map__btnCalm" ng-click="search()">
             &nbsp; Buscar &nbsp;
           </button>
         </div>
@@ -25,8 +25,10 @@
       <ui-gmap-google-map center='map.center' zoom='map.zoom'>
         <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
         </ui-gmap-marker>
-        </ui-gmap-marker>
-        <ui-gmap-markers models="markers" coords="'location'" click="showInfo"></ui-gmap-markers>
+
+        <!--<ui-gmap-marker coords="'site'" idkey="site.id"  icon="'site.category_image'" ng-repeat="site in sites">-->
+        <!--</ui-gmap-marker>-->
+        <ui-gmap-markers models="sites_location" coords="'self'" icon="'icon' "></ui-gmap-markers>
 
         <ui-gmap-window coords="marker.coords" show="infoVisible" closeClick="hideInfo()"
                         options="windowOptions">

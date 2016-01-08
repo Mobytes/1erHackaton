@@ -1,18 +1,22 @@
 from django.db import IntegrityError, transaction
+from django.core.files import File
+from django.contrib.auth import authenticate
+from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import ValidationError
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import viewsets, status
-from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
 from .mixins import DefaultViewSetMixin
 from .models import Site, Category
-from .serializers import SiteSerializer, CategorySerialier, UserSerializer
+from .serializers import SiteSerializer, CategorySerialier, UserSerializer, PictureSerializer
 from .permissions import IsStaffOrTargetUser
-from . import authentication
+
 
 
 class UserView(viewsets.ModelViewSet):
+    queryset = User.objects.all()
     serializer_class = UserSerializer
     model = User
 
@@ -36,11 +40,22 @@ class SiteViewSet(DefaultViewSetMixin, viewsets.ModelViewSet):
     ordering_fields = '__all__'
 
     @transaction.atomic
-    def post(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         try:
             with transaction.atomic():
-                print(request.data)
-                return Response({}, status=status.HTTP_200_OK)
+
+                serializer_site = SiteSerializer(data=request.data)
+                serializer_site.is_valid(raise_exception=True)
+                serializer_site.save()
+
+                picture = File(request.data['picture'])
+
+                picture = {'picture': picture, 'site': serializer_site.data['id']}
+                serializer_picture = PictureSerializer(data=picture)
+                serializer_picture.is_valid(raise_exception=True)
+                serializer_picture.save()
+
+                return Response({'status': "Ok"}, status=status.HTTP_200_OK)
 
         except IntegrityError as e:
             error = {
@@ -58,8 +73,24 @@ class SiteViewSet(DefaultViewSetMixin, viewsets.ModelViewSet):
 
 
 class AuthView(APIView):
-    authentication_classes = (authentication.QuietBasicAuthentication,)
-    serializer_class = UserSerializer
-
     def post(self, request, *args, **kwargs):
-        return Response(self.serializer_class(request.user).data)
+        username = request.data['username']
+        password = request.data['password']
+        if username is not None and password is not None:
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    token, created = Token.objects.get_or_create(user=user)
+                    print(token)
+                    response = {
+                        'token': str(token),
+                        'username': user.username,
+                        'id': user.id
+                    }
+                    return Response(response, status=status.HTTP_200_OK)
+                else:
+                    return Response({'error': 'Invalid User'}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response({'error': 'Invalid Username/Password'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'error': 'Invalid Data'}, status=status.HTTP_400_BAD_REQUEST)

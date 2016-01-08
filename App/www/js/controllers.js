@@ -6,31 +6,38 @@
     .controller('SiteDetailCtrl', SiteDetailCtrl)
     .controller('ConfigCtrl', ConfigCtrl);
 
-  MapCtrl.$inject = ['$scope', '$state', '$ionicLoading', 'uiGmapGoogleMapApi', '$timeout', 'AuthFactory',
-    '$cordovaGeolocation', '$ionicModal', 'RESTService', '$cordovaCamera', '$cordovaActionSheet'];
+  MapCtrl.$inject = ['$scope', '$ionicLoading', 'uiGmapGoogleMapApi', '$timeout', 'AuthFactory', '$cordovaFile',
+    '$cordovaGeolocation', '$ionicModal', 'RESTService', '$cordovaCamera', '$cordovaActionSheet', 'UploadFactory'];
   ConfigCtrl.$inject = ['$scope'];
-  SitesCtrl.$inject = ['$scope', 'Chats'];
+  SitesCtrl.$inject = ['$scope', 'RESTService'];
   SiteDetailCtrl.$inject = ['$scope', '$stateParams', 'Chats'];
 
-  function MapCtrl($scope, $state, $ionicLoading, uiGmapGoogleMapApi, $timeout, AuthFactory,
-                   $cordovaGeolocation, $ionicModal, RESTService, $cordovaCamera, $cordovaActionSheet) {
+  function MapCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout, AuthFactory, $cordovaFile,
+                   $cordovaGeolocation, $ionicModal, RESTService, $cordovaCamera, $cordovaActionSheet, UploadFactory) {
+
 
     $scope.sites = {};
 
     $scope.img_site = "img/icon_digitalizame.png";
-
 
     RESTService.all('categories', null, function (response) {
       $scope.categories = response.results;
       $scope.categorySelected = response.results[0];
     });
 
+    refresh();
+
     $scope.refresh = function () {
-      console.log('refresh');
+      refresh();
     };
 
     $scope.locate = function () {
       initMap();
+    };
+
+    $scope.search = function () {
+      var search = "search=" + document.getElementById("text").value;
+      refresh(search);
     };
 
     $scope.showModal = function () {
@@ -59,6 +66,20 @@
     };
 
     initMap();
+
+    $scope.location = [];
+
+    function refresh(search) {
+      search = search || null;
+
+      $ionicLoading.show({
+        template: 'Actualizando...'
+      });
+      RESTService.all('sites', search, function (response) {
+        $scope.sites_location = response.results;
+        $ionicLoading.hide();
+      });
+    }
 
     //region TAKE AND SELECT PHOTO
     function action_sheet() {
@@ -95,7 +116,9 @@
         correctOrientation: true
       };
 
-      $cordovaCamera.getPicture(options).then(function (imageData) {
+      $cordovaCamera.getPicture(imageData).then(function (imageData) {
+        $scope.file_image = fileEntry;
+
         var image = document.getElementById('picture');
         image.src = "data:image/jpeg;base64," + imageData;
         console.log(image);
@@ -119,9 +142,17 @@
       };
 
       $cordovaCamera.getPicture(options).then(function (imageData) {
+        //var sourceDirectory = sourcePath.substring(0, sourcePath.lastIndexOf('/') + 1);
+        //var sourceFileName = imageData.substring(imageData.lastIndexOf('/') + 1, imageData.length);
+        //$cordovaFile.copyFile(sourceDirectory, sourceFileName, cordova.file.dataDirectory, sourceFileName)
+        //  .then(function (success) {
+        //  $scope.file_image = imageData.file.dataDirectory + sourceFileName;
+        //}, function (error) {
+        //  console.dir(error);
+        //});
+        $scope.file_image = imageData;
         var image = document.getElementById('picture');
         image.src = "data:image/jpeg;base64," + imageData;
-        console.log(image);
       }, function (err) {
         // error
       });
@@ -194,6 +225,7 @@
             var lon = marker.getPosition().lng();
             $scope.sites.latitude = lat;
             $scope.sites.longitude = lon;
+<<<<<<< HEAD
             //$scope.marker.options = {
             //  draggable: true,
             //  labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
@@ -203,10 +235,25 @@
           },
           click: function (marker, eventName, args) {
             $scope.showInfo();
+=======
+>>>>>>> 644919fd098f57b8fc7b9bf8c322b0a8f92665b5
           }
         }
       };
 
+<<<<<<< HEAD
+=======
+      // Code for infowindow
+      //var popup=new google.maps.InfoWindow({
+      //  content: "Hello"
+      //});
+      //google.maps.event.addListener(marker, 'click', function(e) {
+      //  console.log(e);
+      //  popup.open(map, this);
+      //});
+
+
+>>>>>>> 644919fd098f57b8fc7b9bf8c322b0a8f92665b5
       $ionicModal.fromTemplateUrl('modal.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -215,11 +262,27 @@
       });
 
       $scope.saveSite = function () {
+
+        $ionicLoading.show({
+          template: 'Guardando...'
+        });
+
         $scope.sites.category = $scope.categorySelected.id;
         $scope.sites.creator_by = AuthFactory.getUserId();
+        $scope.sites.picture = $scope.file_image;
+
+        //UploadFactory.uploadImagePost(URL.ROOT+'/api/v1/sites', file_image, $scope.sites, function (response) {
+        //  console.log(response)
+        //  //success
+        //}, function (evt) {
+        //  //pre
+        //  file_image.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        //}, function (error) {
+        //  //error
+        //});
         RESTService.save('sites', $scope.sites, function (response) {
           $scope.modal.hide();
-          $state.reload();
+          refresh();
         });
       }
     };
@@ -237,11 +300,12 @@
   }
 
 
-  function SitesCtrl($scope, Chats) {
-    $scope.chats = Chats.all();
-    $scope.remove = function (chat) {
-      Chats.remove(chat);
-    };
+  function SitesCtrl($scope, RESTService) {
+
+    RESTService.all('sites', null, function (response) {
+      $scope.sites = response.results;
+    });
+
   }
 
   function SiteDetailCtrl($scope, $stateParams, Chats) {

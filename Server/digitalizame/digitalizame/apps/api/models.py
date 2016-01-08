@@ -22,6 +22,9 @@ class Site(TimeStampedMixin):
     category = models.ForeignKey(Category)
     creator_by = models.ForeignKey(User, related_name="creator")
 
+    def get_category_icon(self):
+        return Category.objects.get(pk=self.category.id).icon
+
 
 class Picture(TimeStampedMixin):
     picture = models.ImageField(upload_to='sites/')

@@ -25,12 +25,14 @@
   <script src='lib/angular-google-maps/dist/angular-google-maps.min.js'></script>
   <script src='lib/angular-simple-logger.min.js'></script>
   <script src='lib/angular-resource/angular-resource.js'></script>
+  <script src='lib/ng-file-upload/ng-file-upload.min.js'></script>
 
   <script src="cordova.js"></script>
 
   <!-- your app's js -->
   <script src="js/app.js"></script>
   <script src="js/api/constants.js"></script>
+  <script src="js/utils/utils.upload.js"></script>
   <script src="js/auth/auth.service.js"></script>
   <script src="js/auth/auth.controller.js"></script>
   <script src="js/api/service.js"></script>
@@ -60,13 +62,13 @@
       <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close"></span></div>
     </ion-header-bar>
     <ion-content>
-      <form action="">
+      <form name="new_site">
 
         <div class="list">
 
           <label class="item item-input item-stacked-label">
             <span class="input-label">Nombre</span>
-            <input class="Form__input" type="text" placeholder="Nombre del sitio" ng-model="sites.description">
+            <input class="Form__input" type="text" required placeholder="Nombre del sitio" ng-model="sites.description">
           </label>
 
           <label class="item item-input item-stacked-label">
@@ -77,7 +79,7 @@
 
           <label class="item item-input item-stacked-label">
             <span class="input-label">Tags</span>
-            <input class="Form__input" type="text" placeholder="Ejem: restaurant, comida, platos"
+            <input class="Form__input" type="text" required placeholder="Ejem: restaurant, comida, platos"
                    ng-model="sites.tags"/>
           </label>
 
@@ -96,7 +98,7 @@
         </div>
         <!--<button class="button button-full button-energized" ng-click="closeModal()">Done</button>-->
 
-        <button class="button button-block button-calm" ng-click="saveSite()">
+        <button class="button button-block button-calm" ng-click="saveSite()" ng-disabled="!new_site.$valid">
           Save
         </button>
       </form>

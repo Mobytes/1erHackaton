@@ -4,6 +4,7 @@
   angular.module('app', [
       'ionic',
       'app.api.constants',
+      'app.utils.upload',
       'app.auth.service',
       'app.api.services',
       'app.api.rest',
