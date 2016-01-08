@@ -38,7 +38,6 @@
           .then(function (success) {
             $state.go('login');
           });
-
       });
     }
   }
