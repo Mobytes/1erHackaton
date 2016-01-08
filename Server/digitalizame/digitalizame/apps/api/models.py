@@ -7,6 +7,9 @@ class Category(TimeStampedMixin):
     description = models.CharField(max_length=255)
     icon = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.description
+
 
 class Site(TimeStampedMixin):
     user = models.ManyToManyField(User, through='Rating', related_name="ratings")
