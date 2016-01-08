@@ -1,0 +1,72 @@
+[
+  {
+    "model": "api.category",
+    "pk": 1,
+    "fields": {
+      "description": "Hospedajes",
+      "icon": "img/hospedaje.png",
+      "created_at": "2015-12-26 18:07:42",
+      "updated_at": "2015-12-26 18:07:42"
+    }
+  },
+  {
+    "model": "api.category",
+    "pk": 2,
+    "fields": {
+      "description": "Restaurantes",
+      "icon": "img/restaurante.png",
+      "created_at": "2015-12-26 18:07:42",
+      "updated_at": "2015-12-26 18:07:42"
+    }
+  },
+  {
+    "model": "api.category",
+    "pk": 3,
+    "fields": {
+      "description": "Grifos",
+      "icon": "img/grifo.png",
+      "created_at": "2015-12-26 18:07:42",
+      "updated_at": "2015-12-26 18:07:42"
+    }
+  },
+  {
+    "model": "api.category",
+    "pk": 4,
+    "fields": {
+      "description": "Parques",
+      "icon": "img/parque.png",
+      "created_at": "2015-12-26 18:07:42",
+      "updated_at": "2015-12-26 18:07:42"
+    }
+  },
+  {
+    "model": "api.category",
+    "pk": 5,
+    "fields": {
+      "description": "Tiendas",
+      "icon": "img/tienda.png",
+      "created_at": "2015-12-26 18:07:42",
+      "updated_at": "2015-12-26 18:07:42"
+    }
+  },
+  {
+    "model": "api.category",
+    "pk": 5,
+    "fields": {
+      "description": "Lugares Turístico",
+      "icon": "img/turistico.png",
+      "created_at": "2015-12-26 18:07:42",
+      "updated_at": "2015-12-26 18:07:42"
+    }
+  },
+  {
+    "model": "api.category",
+    "pk": 5,
+    "fields": {
+      "description": "Otros",
+      "icon": "img/otros.png",
+      "created_at": "2015-12-26 18:07:42",
+      "updated_at": "2015-12-26 18:07:42"
+    }
+  }
+]

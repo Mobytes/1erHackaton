@@ -5,7 +5,7 @@ from .models import Rating, Site, Picture, Like, Category
 class CategorySerialier(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('description', 'icon')
+        fields = ('id', 'description', 'icon')
 
 
 class RatingSerializer(serializers.ModelSerializer):

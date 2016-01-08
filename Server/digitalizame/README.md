@@ -1,1 +1,2 @@
+### ERROR DE psycopg2
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
