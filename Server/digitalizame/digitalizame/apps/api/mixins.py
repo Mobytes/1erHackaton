@@ -1,4 +1,5 @@
 from django.db import models
+from rest_framework import authentication, permissions, filters
 
 
 class ManagerMainMixin(models.Manager):
@@ -14,3 +15,17 @@ class TimeStampedMixin(models.Model):
 
     class Meta:
         abstract = True
+
+
+class DefaultViewSetMixin(object):
+    # authentication_classes= (
+    #     authentication.BaseAuthentication,
+    #     authentication.TokenAuthentication,
+    # )
+    # permissions_classes = (
+    #     permissions.IsAuthenticated,
+    # )
+    filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter,)
+    paginate_by = 25
+    paginate_by_param = 'page_size'
+    max_paginate_by = 100
