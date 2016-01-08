@@ -6,6 +6,12 @@
     margin-top: 4rem;
     margin-bottom: 5rem;
   }
+  &__imgContainer2{
+    text-align: center;
+    padding: 0;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+  }
 
   &__img{
     width: 50%;
@@ -13,6 +19,10 @@
 
   &__input{
     font-size: 1rem !important;
+  }
+  &__register{
+    display: inline-block;
+    padding-top: 1rem;
   }
 }
 
