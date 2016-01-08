@@ -12185,6 +12185,9 @@ a.button {
   .btn__iconMore:hover {
     background: #dd3d00; }
 
+.Map__inputSearchCont {
+  padding: .3rem; }
+
 .Map__Search {
   position: relative; }
 
@@ -12195,6 +12198,10 @@ a.button {
 
 .Map__iconSearch {
   font-size: 1.3rem; }
+
+.Map__btnCalm {
+  position: relative;
+  top: -2px; }
 
 .chat__img {
   width: 50px;
