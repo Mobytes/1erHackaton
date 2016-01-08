@@ -62,16 +62,37 @@
       };
 
       $cordovaActionSheet.show(options)
-      .then(function(btnIndex) {
-        var index = btnIndex;
-        if(index == 1){
-          take_photo();
-        }
-      });
+        .then(function (btnIndex) {
+          var index = btnIndex;
+          if (index == 1) {
+            take_photo();
+          } else if (index == 2) {
+            find_photo();
+          }
+        });
     }
 
-    function find_photo(){
+    function find_photo() {
+      var options = {
+        quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+        allowEdit: true,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 100,
+        targetHeight: 100,
+        popoverOptions: CameraPopoverOptions,
+        saveToPhotoAlbum: false,
+        correctOrientation: true
+      };
 
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+        var image = document.getElementById('picture');
+        image.src = "data:image/jpeg;base64," + imageData;
+        console.log(image);
+      }, function (err) {
+        // error
+      });
     }
 
     function take_photo() {
