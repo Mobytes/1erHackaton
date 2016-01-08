@@ -116,8 +116,8 @@
         correctOrientation: true
       };
 
-      $cordovaCamera.getPicture(imageData).then(function (imageData) {
-        $scope.file_image = fileEntry;
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+        $scope.file_image = imageData;
 
         var image = document.getElementById('picture');
         image.src = "data:image/jpeg;base64," + imageData;
@@ -268,6 +268,7 @@
         //});
         RESTService.save('sites', $scope.sites, function (response) {
           $scope.modal.hide();
+          $scope.sites = {};
           refresh();
         });
       }
