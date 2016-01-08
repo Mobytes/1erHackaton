@@ -12176,6 +12176,7 @@ a.button {
   display: inline-block;
   background: orangered;
   border-radius: 50%;
+  box-shadow: 3px -0px 10px #232323;
   color: white;
   width: 3rem;
   height: 3rem;
