@@ -225,7 +225,6 @@
             var lon = marker.getPosition().lng();
             $scope.sites.latitude = lat;
             $scope.sites.longitude = lon;
-<<<<<<< HEAD
             //$scope.marker.options = {
             //  draggable: true,
             //  labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
@@ -235,25 +234,12 @@
           },
           click: function (marker, eventName, args) {
             $scope.showInfo();
-=======
->>>>>>> 644919fd098f57b8fc7b9bf8c322b0a8f92665b5
+
           }
         }
       };
 
-<<<<<<< HEAD
-=======
-      // Code for infowindow
-      //var popup=new google.maps.InfoWindow({
-      //  content: "Hello"
-      //});
-      //google.maps.event.addListener(marker, 'click', function(e) {
-      //  console.log(e);
-      //  popup.open(map, this);
-      //});
 
-
->>>>>>> 644919fd098f57b8fc7b9bf8c322b0a8f92665b5
       $ionicModal.fromTemplateUrl('modal.html', {
         scope: $scope,
         animation: 'slide-in-up'
