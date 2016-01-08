@@ -199,6 +199,17 @@
         }
       };
 
+      // Code for infowindow
+      //var popup=new google.maps.InfoWindow({
+      //  content: "Hello"
+      //});
+      //google.maps.event.addListener(marker, 'click', function(e) {
+      //  console.log(e);
+      //  popup.open(map, this);
+      //});
+
+
+
       $ionicModal.fromTemplateUrl('modal.html', {
         scope: $scope,
         animation: 'slide-in-up'
