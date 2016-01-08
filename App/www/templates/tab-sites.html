@@ -4,8 +4,11 @@
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/app/site/{{chat.id}}">
         <img class="chat__img" ng-src="{{chat.face}}">
         <h2>{{chat.name}}</h2>
+
+        <span class="ion-thumbsup "></span><span>10</span>
+
         <p>Restaurant</p>
-        <span class="ion-thumbsup"></span><span>10</span>
+
         <i class="icon ion-chevron-right icon-accessory"></i>
 
         <ion-option-button class="button-assertive" ng-click="remove(chat)">
