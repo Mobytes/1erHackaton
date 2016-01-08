@@ -21,11 +21,26 @@
     .controller('RegisterCtrl', RegisterCtrl)
     .controller('LoginCtrl', LoginCtrl);
 
-  RegisterCtrl.$inject = ['$scope'];
+  RegisterCtrl.$inject = ['$scope', '$state', 'RESTService', '$cordovaToast'];
   LoginCtrl.$inject = ['$scope', 'URL'];
 
-  function RegisterCtrl($scope) {
+  function RegisterCtrl($scope, $state, RESTService, $cordovaToast) {
+    $scope.user = {};
 
+    $scope.logo = "img/icon_digitalizame.png";
+
+    $scope.register = function () {
+      console.log($scope.user);
+      RESTService.save('accounts', $scope.user, function (response) {
+        console.log(response);
+        $cordovaToast
+          .show('Ahora ingrese por favor', 'long', 'center')
+          .then(function (success) {
+            $state.go('login');
+          });
+
+      });
+    }
   }
 
   function LoginCtrl($scope, URL) {
