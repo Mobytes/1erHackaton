@@ -15,14 +15,14 @@
  *  * limitations under the License.
  *
  */
-(function(){
+(function () {
   'use strict';
   angular.module('app.auth.service', [])
     .factory('LoginFactory', LoginFactory);
 
   LoginFactory.$inject = [];
 
-  function LoginFactory(){
+  function LoginFactory() {
 
   }
 })();

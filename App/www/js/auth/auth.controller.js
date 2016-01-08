@@ -22,13 +22,13 @@
     .controller('LoginCtrl', LoginCtrl);
 
   RegisterCtrl.$inject = ['$scope'];
-  LoginCtrl.$inject = ['$scope'];
+  LoginCtrl.$inject = ['$scope', 'URL'];
 
   function RegisterCtrl($scope) {
 
   }
 
-  function LoginCtrl($scope) {
-
+  function LoginCtrl($scope, URL) {
+    $scope.logo = "img/icon_digitalizame.png";
   }
 })();
