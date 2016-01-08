@@ -60,24 +60,24 @@
       <div class="list">
         <label class="item item-input item-stacked-label">
           <span class="input-label">Nombre</span>
-          <input type="text" placeholder="Nombre del sitio" ng-model="site.description">
+          <input class="Form__input" type="text" placeholder="Nombre del sitio" ng-model="site.description">
         </label>
 
         <label class="item item-input item-stacked-label">
           <span class="input-label">Descripción</span>
-          <textarea type="text" placeholder="Describe este sitio" ng-model="site.detail"></textarea>
+          <input class="Form__input" type="text" placeholder="Describe este sitio" ng-model="site.detail">
         </label>
 
         <label class="item item-input item-stacked-label">
           <span class="input-label">Tags</span>
-          <input type="text" placeholder="Ejem: restaurant, comida, platos" ng-model="sites.tags" />
+          <input class="Form__input" type="text" placeholder="Ejem: restaurant, comida, platos" ng-model="sites.tags" />
         </label>
 
         <label class="item item-input item-select">
           <div class="input-label">
             Categoria
           </div>
-          <select ng-model="categorySelected"
+          <select class="Form__input" ng-model="categorySelected"
                   ng-options="category.description for category in categories">
           </select>
         </label>
