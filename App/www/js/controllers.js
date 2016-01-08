@@ -18,6 +18,7 @@
 
     $scope.sites = {};
 
+    $scope.img_site = "img/icon_digitalizame.png";
 
     RESTService.all('categories', null, function (response) {
       $scope.categories = response.results;
@@ -51,6 +52,7 @@
     // Initialize and show infoWindow for business
     $scope.showInfo = function (marker, eventName, markerModel) {
       $scope.infoBusiness = markerModel;
+      console.log(markerModel);
       $scope.infoVisible = true;
     };
 
@@ -209,6 +211,7 @@
         }
       };
 
+
       $scope.marker = {
         id: 0,
         coords: {
@@ -222,18 +225,19 @@
             var lon = marker.getPosition().lng();
             $scope.sites.latitude = lat;
             $scope.sites.longitude = lon;
+            //$scope.marker.options = {
+            //  draggable: true,
+            //  labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
+            //  labelAnchor: "100 0",
+            //  labelClass: "marker-labels"
+            //};
+          },
+          click: function (marker, eventName, args) {
+            $scope.showInfo();
+
           }
         }
       };
-
-      // Code for infowindow
-      //var popup=new google.maps.InfoWindow({
-      //  content: "Hello"
-      //});
-      //google.maps.event.addListener(marker, 'click', function(e) {
-      //  console.log(e);
-      //  popup.open(map, this);
-      //});
 
 
       $ionicModal.fromTemplateUrl('modal.html', {

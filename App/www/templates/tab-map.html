@@ -30,10 +30,20 @@
         <!--</ui-gmap-marker>-->
         <ui-gmap-markers models="sites_location" coords="'self'" icon="'icon' "></ui-gmap-markers>
 
-        <ui-gmap-window coords="infoBusiness.location" show="infoVisible" closeClick="hideInfo()"
+        <ui-gmap-window coords="marker.coords" show="infoVisible" closeClick="hideInfo()"
                         options="windowOptions">
-          <div>
-            <a target="_blank" href="{{infoBusiness.url}}">{{infoBusiness.name}}</a>
+          <div class="Map__tooltip">
+            <p>Nombre del sitio</p>
+
+            <div class="text-center">
+              <img class="Map__tooltipImg" ng-src="{{img_site}}" alt="">
+            </div>
+            <div class="Map__tooltipBtn">
+              <button class="Map__tooltipBtnLike"><span class="ion-thumbsup"></span>Like</button>
+              <button class="Map__tooltipBtnShared"><span class="ion-share"></span>Shared</button>
+            </div>
+
+            <!--<a target="_blank" href="{{infoBusiness.url}}">{{infoBusiness.name}}</a>-->
           </div>
         </ui-gmap-window>
 
