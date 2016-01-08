@@ -2,12 +2,12 @@
   <ion-content>
     <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/app/site/{{chat.id}}">
-        <img class="chat__img" ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-
-        <span class="ion-thumbsup "></span><span>10</span>
-
-        <p>Restaurant</p>
+        <div class="item item-thumbnail-left">
+          <img class="" ng-src="{{chat.face}}">
+          <h2>Pretty Hate Machine</h2>
+          <p>Nine Inch Nails</p>
+          <p><span class="ion-thumbsup color-green"></span>&nbsp;4</p>
+        </div>
 
         <i class="icon ion-chevron-right icon-accessory"></i>
 
@@ -15,6 +15,10 @@
           Delete
         </ion-option-button>
       </ion-item>
+
+
+
+
     </ion-list>
   </ion-content>
 </ion-view>
