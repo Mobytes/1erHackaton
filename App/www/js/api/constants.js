@@ -22,7 +22,7 @@
   angular.module('app.api.constants', []).
 
   constant('URL', {
-    'ROOT': 'http://192.168.1.111:8000',
+    'ROOT': 'http://mobytescorp.com',
     'APP': 'http://localhost:8100/'
   });
 
