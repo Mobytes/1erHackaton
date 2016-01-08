@@ -12209,6 +12209,24 @@ a.button {
   position: relative;
   top: -2px; }
 
+.Map__tooltip {
+  width: 150px; }
+
+.Map__tooltipImg {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: 120px; }
+
+.Map__tooltipBtn {
+  text-align: center;
+  margin-top: .2rem; }
+
+.Map__tooltipBtnLike {
+  border: none;
+  color: white;
+  background: #33cd5f; }
+
 .chat__img {
   width: 50px;
   max-width: 50px !important;
