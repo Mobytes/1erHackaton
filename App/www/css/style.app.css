@@ -12167,7 +12167,7 @@ a.button {
 .btn__moresContainer {
   position: absolute;
   bottom: 1rem;
-  right: .5rem;
+  right: .9rem;
   font-size: 4rem;
   z-index: 1; }
 
@@ -12176,6 +12176,7 @@ a.button {
   display: inline-block;
   background: orangered;
   border-radius: 50%;
+  box-shadow: 3px -0px 10px #232323;
   color: white;
   width: 3rem;
   height: 3rem;
@@ -12184,8 +12185,28 @@ a.button {
   .btn__iconMore:hover {
     background: #dd3d00; }
 
+.Map__Search {
+  position: relative; }
+
+.Map__inputSearch {
+  margin: 0 auto;
+  border: 1px solid silver !important;
+  margin-bottom: .3rem; }
+
+.Map__iconSearch {
+  font-size: 1.3rem; }
+
 .chat__img {
   width: 50px;
   max-width: 50px !important;
   max-height: 50px !important;
   border-radius: 0px !important; }
+
+.Form__photo {
+  width: 100%;
+  background: url("../img/camera.png");
+  background-position: center;
+  background-size: 40%;
+  background-repeat: no-repeat;
+  height: 40vh;
+  border: none; }

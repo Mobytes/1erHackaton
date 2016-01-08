@@ -1,0 +1,11 @@
+.Form{
+  &__photo{
+    width: 100%;
+    background: url("../img/camera.png");
+    background-position: center;
+    background-size: 40%;
+    background-repeat: no-repeat;
+    height: 40vh;
+    border: none;
+  }
+}

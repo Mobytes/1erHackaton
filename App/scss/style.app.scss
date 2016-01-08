@@ -1,11 +1,12 @@
 @import "scss/ionic.app.scss";
 
 //Variables
-@import "scss/maps/maps.variables.scss";
-@import "scss/chat/chat.variables";
+@import "scss/maps/maps.variables";
+@import "scss/sites/sites.variables";
+@import "scss/formNew/form.variables";
 
 //Styles
-
-@import "scss/maps/maps.style.scss";
-@import "scss/chat/chat.style.scss";
+@import "scss/maps/maps.style";
+@import "scss/sites/sites.style";
+@import "scss/formNew/form.style";
 
