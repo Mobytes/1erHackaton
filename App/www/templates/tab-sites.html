@@ -1,11 +1,11 @@
 <ion-view view-title="Lugares">
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/app/site/{{chat.id}}">
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="site in sites" type="item-text-wrap" href="#/app/site/{{chat.id}}">
         <div class="item item-thumbnail-left">
-          <img class="" ng-src="{{chat.face}}">
-          <h2>Pretty Hate Machine</h2>
-          <p>Nine Inch Nails</p>
+          <img class="" ng-src="{{site.icon}}">
+          <h2>{{site.description}}</h2>
+          <p>{{site.detail}}</p>
           <p><span class="ion-thumbsup color-green"></span>&nbsp;4</p>
         </div>
 

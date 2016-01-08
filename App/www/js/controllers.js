@@ -6,16 +6,15 @@
     .controller('SiteDetailCtrl', SiteDetailCtrl)
     .controller('ConfigCtrl', ConfigCtrl);
 
-  MapCtrl.$inject = ['$scope', '$state', '$ionicLoading', 'uiGmapGoogleMapApi', '$timeout', 'AuthFactory', 'URL',
+  MapCtrl.$inject = ['$scope', '$ionicLoading', 'uiGmapGoogleMapApi', '$timeout', 'AuthFactory',
     '$cordovaGeolocation', '$ionicModal', 'RESTService', '$cordovaCamera', '$cordovaActionSheet', 'UploadFactory'];
   ConfigCtrl.$inject = ['$scope'];
-  SitesCtrl.$inject = ['$scope', 'Chats'];
+  SitesCtrl.$inject = ['$scope', 'RESTService'];
   SiteDetailCtrl.$inject = ['$scope', '$stateParams', 'Chats'];
 
-  function MapCtrl($scope, $state, $ionicLoading, uiGmapGoogleMapApi, $timeout, AuthFactory, URL,
+  function MapCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout, AuthFactory,
                    $cordovaGeolocation, $ionicModal, RESTService, $cordovaCamera, $cordovaActionSheet, UploadFactory) {
 
-    var file_image = null;
 
     $scope.sites = {};
 
@@ -25,8 +24,10 @@
       $scope.categorySelected = response.results[0];
     });
 
+    refresh();
+
     $scope.refresh = function () {
-      console.log('refresh');
+      refresh();
     };
 
     $scope.locate = function () {
@@ -58,6 +59,18 @@
     };
 
     initMap();
+
+    $scope.location = [];
+
+    function refresh() {
+      $ionicLoading.show({
+        template: 'Actualizando...'
+      });
+      RESTService.all('sites', null, function (response) {
+        $scope.sites_location = response.results;
+        $ionicLoading.hide();
+      });
+    }
 
     //region TAKE AND SELECT PHOTO
     function action_sheet() {
@@ -95,7 +108,7 @@
       };
 
       $cordovaCamera.getPicture(options).then(function (imageData) {
-        file_image = imageData;
+        $scope.file_image = imageData;
         var image = document.getElementById('picture');
         image.src = "data:image/jpeg;base64," + imageData;
         console.log(image);
@@ -119,7 +132,7 @@
       };
 
       $cordovaCamera.getPicture(options).then(function (imageData) {
-        file_image = imageData;
+        $scope.file_image = imageData;
         var image = document.getElementById('picture');
         image.src = "data:image/jpeg;base64," + imageData;
       }, function (err) {
@@ -193,12 +206,6 @@
             var lon = marker.getPosition().lng();
             $scope.sites.latitude = lat;
             $scope.sites.longitude = lon;
-            //$scope.marker.options = {
-            //  draggable: true,
-            //  labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
-            //  labelAnchor: "100 0",
-            //  labelClass: "marker-labels"
-            //};
           }
         }
       };
@@ -211,10 +218,14 @@
       });
 
       $scope.saveSite = function () {
+
+        $ionicLoading.show({
+          template: 'Guardando...'
+        });
+
         $scope.sites.category = $scope.categorySelected.id;
         $scope.sites.creator_by = AuthFactory.getUserId();
-
-        console.log(JSON.stringify(file_image));
+        $scope.sites.picture = $scope.file_image;
 
         //UploadFactory.uploadImagePost(URL.ROOT+'/api/v1/sites', file_image, $scope.sites, function (response) {
         //  console.log(response)
@@ -227,7 +238,7 @@
         //});
         RESTService.save('sites', $scope.sites, function (response) {
           $scope.modal.hide();
-          $state.reload();
+          refresh();
         });
       }
     };
@@ -245,11 +256,12 @@
   }
 
 
-  function SitesCtrl($scope, Chats) {
-    $scope.chats = Chats.all();
-    $scope.remove = function (chat) {
-      Chats.remove(chat);
-    };
+  function SitesCtrl($scope, RESTService) {
+
+    RESTService.all('sites', null, function (response) {
+      $scope.sites = response.results;
+    });
+
   }
 
   function SiteDetailCtrl($scope, $stateParams, Chats) {
