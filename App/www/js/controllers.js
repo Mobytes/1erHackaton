@@ -15,6 +15,8 @@
   function MapCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout,
                    $cordovaGeolocation, $ionicModal, RESTService, $cordovaCamera, $cordovaActionSheet) {
 
+    $scope.sites = {};
+
     RESTService.all('categories', null, function (response) {
       $scope.categories = response.results;
       $scope.categorySelected = response.results[0];
@@ -133,11 +135,9 @@
         // Don't pass timeout parameter here; that is handled by setTimeout below
         var posOptions = {enableHighAccuracy: false};
         $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-          console.log("Got location: " + JSON.stringify(position));
           $ionicLoading.hide();
           initializeMap(position);
         }, function (error) {
-          console.log(error);
           $ionicLoading.hide();
           initializeMap();
         });
@@ -155,6 +155,9 @@
         };
       }
       // TODO add marker on current location
+
+      $scope.sites.latitude = position.coords.latitude;
+      $scope.sites.longitude = position.coords.longitude;
 
       $scope.map = {
         center: {
@@ -183,16 +186,14 @@
           dragend: function (marker, eventName, args) {
             var lat = marker.getPosition().lat();
             var lon = marker.getPosition().lng();
+            $scope.sites.latitude = lat;
+            $scope.sites.longitude = lon;
             //$scope.marker.options = {
             //  draggable: true,
             //  labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
             //  labelAnchor: "100 0",
             //  labelClass: "marker-labels"
             //};
-          },
-          dblclick: function (marker, eventName, args) {
-            var lat = marker.getPosition().lat();
-            var lon = marker.getPosition().lng();
           }
         }
       };
@@ -205,7 +206,10 @@
       });
 
       $scope.saveSite = function () {
-        console.log('save');
+        $scope.sites.category = $scope.categorySelected.id;
+        RESTService.save('sites', $scope.sites, function(response){
+
+        });
       }
     };
 
@@ -215,7 +219,7 @@
     $timeout(function () {
       if (!$scope.map) {
         console.log("No confirmation from user, using fallback");
-        initializeMap();
+        //initializeMap();
       }
     }, 5000);
 
