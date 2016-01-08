@@ -1,0 +1,24 @@
+.btn__moresContainer{
+  position: absolute;
+  bottom: 1rem;
+  right: .5rem;
+  font-size: 4rem;
+  z-index: 1;
+}
+.btn{
+  &__iconMore{
+    font-size: 2rem;
+    display: inline-block;
+    background: orangered;
+    border-radius: 50%;
+    color: white;
+    width: 3rem;
+    height:3rem;
+    line-height: 3rem;
+    text-align: center;
+
+    &:hover{
+      background: #dd3d00;
+    }
+  }
+}

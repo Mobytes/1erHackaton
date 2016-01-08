@@ -7,6 +7,7 @@
 
   <link href="lib/ionic/css/ionic.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
+  <link href="css/style.app.css" rel="stylesheet">
 
   <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
   <link href="css/ionic.app.css" rel="stylesheet">
@@ -49,21 +50,53 @@
 <script id="modal.html" type="text/ng-template">
   <div class="modal">
     <ion-header-bar>
-      <h1 class="title">Edit Contact</h1>
+      <h1 class="title">Nuevo Sitio</h1>
       <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close"></span></div>
     </ion-header-bar>
     <ion-content>
       <div class="list">
-        <label class="item item-input">
+        <label class="item item-input item-stacked-label">
           <span class="input-label">Nombre</span>
-          <input type="text" ng-model="company.name">
+          <input type="text" placeholder="Nombre del sitio">
         </label>
-        <label class="item item-input">
-          <span class="input-label">tags</span>
-          <input type="text" ng-model="company.tags">
+
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Descripción</span>
+          <textarea type="text" placeholder="Describe este sitio"></textarea>
         </label>
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Tags</span>
+          <textarea type="text" placeholder="Ejem: restaurant, comida, platos"></textarea>
+        </label>
+
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Categoria
+          </div>
+          <select>
+            <option selected>Restaurant</option>
+            <option>Hospedajes</option>
+            <option>Grifos</option>
+            <option>Parques</option>
+            <option>Ropa</option>
+            <option>Turístico</option>
+            <option>Del estado</option>
+            <option>Otros</option>
+          </select>
+        </label>
+
+
+
+
       </div>
-      <button class="button button-full button-energized" ng-click="closeModal()">Done</button>
+      <!--<button class="button button-full button-energized" ng-click="closeModal()">Done</button>-->
+      <button class="button button-block button-positive">
+        Save
+      </button>
+
     </ion-content>
   </div>
 </script>
