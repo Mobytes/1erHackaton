@@ -7,6 +7,7 @@
       'app.api.services',
       'app.api.rest',
       'app.controllers',
+      'app.auth.controllers',
       'app.services',
       'ngCordova',
       'uiGmapgoogle-maps'
@@ -93,27 +94,21 @@
         }
       })
 
-  .state('app.login', {
-      url: '/login',
-      views: {
-        'tab-account': {
-          templateUrl: 'templates/login.html'
-          //controller: 'LoginCtrl'
-        }
-      }
-    })
 
-  .state('app.register', {
-      url: '/register',
-      views: {
-        'tab-account': {
-          templateUrl: 'templates/register.html'
-          //controller: 'LoginCtrl'
-        }
-      }
-    });
+      //AUTH
+      .state('login', {
+        url: '/login',
+        templateUrl: 'templates/login.html',
+        controller: 'LoginCtrl'
+      })
+
+      .state('register', {
+        url: '/register',
+        templateUrl: 'templates/register.html',
+        controller: 'RegisterCtrl'
+      });
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/map');
+    $urlRouterProvider.otherwise('/login');
   }
 })();
