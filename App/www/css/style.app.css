@@ -12210,7 +12210,8 @@ a.button {
   top: -2px; }
 
 .Map__tooltip {
-  width: 150px; }
+  width: 180px;
+  position: relative; }
 
 .Map__tooltipImg {
   display: block;
@@ -12220,12 +12221,26 @@ a.button {
 
 .Map__tooltipBtn {
   text-align: center;
-  margin-top: .2rem; }
+  margin-top: .2rem;
+  width: 100%;
+  position: relative; }
 
 .Map__tooltipBtnLike {
+  width: 50%;
   border: none;
   color: white;
-  background: #33cd5f; }
+  background: #33cd5f;
+  position: absolute;
+  bottom: 0;
+  left: 0; }
+
+.Map__tooltipBtnShared {
+  width: 50%;
+  border: none;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  left: 50%; }
 
 .chat__img {
   width: 50px;
