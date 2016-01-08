@@ -6,13 +6,13 @@
     .controller('SiteDetailCtrl', SiteDetailCtrl)
     .controller('ConfigCtrl', ConfigCtrl);
 
-  MapCtrl.$inject = ['$scope', '$ionicLoading', 'uiGmapGoogleMapApi', '$timeout', 'AuthFactory',
+  MapCtrl.$inject = ['$scope', '$ionicLoading', 'uiGmapGoogleMapApi', '$timeout', 'AuthFactory', '$cordovaFile',
     '$cordovaGeolocation', '$ionicModal', 'RESTService', '$cordovaCamera', '$cordovaActionSheet', 'UploadFactory'];
   ConfigCtrl.$inject = ['$scope'];
   SitesCtrl.$inject = ['$scope', 'RESTService'];
   SiteDetailCtrl.$inject = ['$scope', '$stateParams', 'Chats'];
 
-  function MapCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout, AuthFactory,
+  function MapCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout, AuthFactory, $cordovaFile,
                    $cordovaGeolocation, $ionicModal, RESTService, $cordovaCamera, $cordovaActionSheet, UploadFactory) {
 
 
@@ -32,6 +32,11 @@
 
     $scope.locate = function () {
       initMap();
+    };
+
+    $scope.search = function () {
+      var search = "search=" + document.getElementById("text").value;
+      refresh(search);
     };
 
     $scope.showModal = function () {
@@ -62,11 +67,13 @@
 
     $scope.location = [];
 
-    function refresh() {
+    function refresh(search) {
+      search = search || null;
+
       $ionicLoading.show({
         template: 'Actualizando...'
       });
-      RESTService.all('sites', null, function (response) {
+      RESTService.all('sites', search, function (response) {
         $scope.sites_location = response.results;
         $ionicLoading.hide();
       });
@@ -107,8 +114,9 @@
         correctOrientation: true
       };
 
-      $cordovaCamera.getPicture(options).then(function (imageData) {
-        $scope.file_image = imageData;
+      $cordovaCamera.getPicture(imageData).then(function (imageData) {
+        $scope.file_image = fileEntry;
+
         var image = document.getElementById('picture');
         image.src = "data:image/jpeg;base64," + imageData;
         console.log(image);
@@ -132,6 +140,14 @@
       };
 
       $cordovaCamera.getPicture(options).then(function (imageData) {
+        //var sourceDirectory = sourcePath.substring(0, sourcePath.lastIndexOf('/') + 1);
+        //var sourceFileName = imageData.substring(imageData.lastIndexOf('/') + 1, imageData.length);
+        //$cordovaFile.copyFile(sourceDirectory, sourceFileName, cordova.file.dataDirectory, sourceFileName)
+        //  .then(function (success) {
+        //  $scope.file_image = imageData.file.dataDirectory + sourceFileName;
+        //}, function (error) {
+        //  console.dir(error);
+        //});
         $scope.file_image = imageData;
         var image = document.getElementById('picture');
         image.src = "data:image/jpeg;base64," + imageData;
@@ -209,6 +225,16 @@
           }
         }
       };
+
+      // Code for infowindow
+      //var popup=new google.maps.InfoWindow({
+      //  content: "Hello"
+      //});
+      //google.maps.event.addListener(marker, 'click', function(e) {
+      //  console.log(e);
+      //  popup.open(map, this);
+      //});
+
 
       $ionicModal.fromTemplateUrl('modal.html', {
         scope: $scope,
