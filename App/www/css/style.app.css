@@ -12217,3 +12217,8 @@ a.button {
   background-repeat: no-repeat;
   height: 40vh;
   border: none; }
+
+.Form__img {
+  width: 100%;
+  height: 100%;
+  padding: 1rem; }
