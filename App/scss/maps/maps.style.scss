@@ -26,6 +26,10 @@
 
 .Map
 {
+  &__inputSearchCont{
+    padding: .3rem;
+  }
+
   &__Search{
     position: relative;
   }
@@ -37,5 +41,10 @@
   &__iconSearch
   {
     font-size: 1.3rem;
+  }
+
+  &__btnCalm{
+    position: relative;
+    top: -2px;
   }
 }
