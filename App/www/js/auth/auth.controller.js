@@ -37,7 +37,6 @@
             $scope.user = {};
             $state.go('login');
           });
-
       });
     }
   }

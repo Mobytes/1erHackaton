@@ -12215,6 +12215,36 @@ a.button {
   max-height: 50px !important;
   border-radius: 0px !important; }
 
+.Sites__pullRigth {
+  float: right; }
+
+.Detail__title {
+  font-size: 1.5rem !important; }
+
+.color-green {
+  color: #33cd5f; }
+
+.color-skyBlue {
+  color: #0a9dc7 !important; }
+
+.color-skyBlue2 {
+  color: rgba(10, 157, 199, 0.7) !important; }
+
+.color-orange {
+  color: orangered; }
+
+.item-avatar, .item-avatar .item-content, .item-avatar-left, .item-avatar-left .item-content {
+  padding-left: 1rem; }
+
+.item .item-thumbnail-left {
+  border: none !important; }
+
+.item-complex .item-content, .item-radio .item-content {
+  padding: 0 4rem 0.1rem 0.1rem !important; }
+
+.item.active, .item.activated, .item-complex.active .item-content, .item-complex.activated .item-content, .item .item-content.active, .item .item-content.activated {
+  background: rgba(51, 205, 95, 0.1) !important; }
+
 .Form__photo {
   width: 100%;
   background: url("../img/camera.png");
