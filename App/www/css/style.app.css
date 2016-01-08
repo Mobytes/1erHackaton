@@ -28,8 +28,8 @@ $dark:                            #444 !default;
 */
 @font-face {
   font-family: "Ionicons";
-  /*src: url("../fonts/ionicons.eot?v=2.0.1");*/
-  /*src: url("../fonts/ionicons.eot?v=2.0.1#iefix") format("embedded-opentype"), url("../fonts/ionicons.ttf?v=2.0.1") format("truetype"), url("../fonts/ionicons.woff?v=2.0.1") format("woff"), url("../fonts/ionicons.woff") format("woff"), url("../fonts/ionicons.svg?v=2.0.1#Ionicons") format("svg");*/
+  src: url("../fonts/ionicons.eot?v=2.0.1");
+  src: url("../fonts/ionicons.eot?v=2.0.1#iefix") format("embedded-opentype"), url("../fonts/ionicons.ttf?v=2.0.1") format("truetype"), url("../fonts/ionicons.woff?v=2.0.1") format("woff"), url("../fonts/ionicons.woff") format("woff"), url("../fonts/ionicons.svg?v=2.0.1#Ionicons") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -9102,8 +9102,8 @@ a.button {
 */
 @font-face {
   font-family: "Ionicons";
-  /*src: url("../fonts/ionicons.eot?v=2.0.1");*/
-  /*src: url("../fonts/ionicons.eot?v=2.0.1#iefix") format("embedded-opentype"), url("../fonts/ionicons.ttf?v=2.0.1") format("truetype"), url("../fonts/ionicons.woff?v=2.0.1") format("woff"), url("../fonts/ionicons.svg?v=2.0.1#Ionicons") format("svg");*/
+  src: url("../fonts/ionicons.eot?v=2.0.1");
+  src: url("../fonts/ionicons.eot?v=2.0.1#iefix") format("embedded-opentype"), url("../fonts/ionicons.ttf?v=2.0.1") format("truetype"), url("../fonts/ionicons.woff?v=2.0.1") format("woff"), url("../fonts/ionicons.svg?v=2.0.1#Ionicons") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -12185,8 +12185,32 @@ a.button {
   .btn__iconMore:hover {
     background: #dd3d00; }
 
+.Map__Search {
+  position: relative; }
+
+.Map__inputSearch {
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid black !important;
+  padding: 0 0 0 1.9rem !important;
+  margin-bottom: .3rem; }
+
+.Map__iconSearch {
+  position: absolute;
+  font-size: 1.5rem;
+  top: .3rem;
+  left: .4rem; }
+
 .chat__img {
   width: 50px;
   max-width: 50px !important;
   max-height: 50px !important;
   border-radius: 0px !important; }
+
+.Form__photo {
+  width: 100%;
+  background: url("../img/camera.png");
+  background-position: center;
+  background-size: 40%;
+  background-repeat: no-repeat;
+  height: 40vh; }
