@@ -18,11 +18,44 @@
 (function () {
   'use strict';
   angular.module('app.auth.service', [])
-    .factory('LoginFactory', LoginFactory);
+    .factory('AuthFactory', AuthFactory);
 
-  LoginFactory.$inject = [];
+  AuthFactory.$inject = [];
 
-  function LoginFactory() {
+  function AuthFactory() {
+    var token = {
+      getToken: getToken,
+      setToken: setToken,
+      getUser: getUser,
+      setUser: setUser,
+      getUserId: getUserId,
+      setUserId: setUserId
+    };
+    return token;
 
+    function getUserId(){
+      return (window.localStorage.user_id) ? window.localStorage.user_id : null;
+    }
+
+    function setUserId(user_id){
+      window.localStorage.user_id = user_id;
+    }
+
+    function getToken() {
+      return (window.localStorage.token) ? window.localStorage.token : null;
+    }
+
+    function setToken(token) {
+      window.localStorage.token = token;
+    }
+
+    function setUser(user) {
+      window.localStorage.user = JSON.stringify(user);
+    }
+
+    function getUser() {
+      return (window.localStorage.user) ?
+        JSON.parse(window.localStorage.user) : null;
+    }
   }
 })();

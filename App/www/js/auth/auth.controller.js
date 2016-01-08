@@ -22,7 +22,7 @@
     .controller('LoginCtrl', LoginCtrl);
 
   RegisterCtrl.$inject = ['$scope', '$state', 'RESTService', '$cordovaToast'];
-  LoginCtrl.$inject = ['$scope', 'URL'];
+  LoginCtrl.$inject = ['$scope', '$state', 'RESTService', 'AuthFactory', '$ionicLoading'];
 
   function RegisterCtrl($scope, $state, RESTService, $cordovaToast) {
     $scope.user = {};
@@ -30,19 +30,34 @@
     $scope.logo = "img/icon_digitalizame.png";
 
     $scope.register = function () {
-      console.log($scope.user);
       RESTService.save('accounts', $scope.user, function (response) {
-        console.log(response);
         $cordovaToast
           .show('Ahora ingrese por favor', 'long', 'center')
           .then(function (success) {
+            $scope.user = {};
             $state.go('login');
           });
       });
     }
   }
 
-  function LoginCtrl($scope, URL) {
+  function LoginCtrl($scope, $state, RESTService, AuthFactory, $ionicLoading) {
+    $scope.user = {};
+
     $scope.logo = "img/icon_digitalizame.png";
+
+    $scope.login = function () {
+      $ionicLoading.show({
+        template: 'Iniciando sesion...'
+      });
+
+      RESTService.save('login', $scope.user, function (response) {
+        AuthFactory.setToken(response.token);
+        AuthFactory.setUser(response.username);
+        AuthFactory.setUserId(response.id);
+        $ionicLoading.hide();
+        $state.go('app.map')
+      });
+    }
   }
 })();

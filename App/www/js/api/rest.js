@@ -82,6 +82,7 @@
           callback(response);
         }
       }, function (error) {
+        console.log(error);
         alert(error.data.message);
         return false;
       });
