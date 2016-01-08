@@ -1,16 +1,15 @@
 angular.module('starter.controllers', [])
-  .controller('DashCtrl', DashCtrl)
-  .controller('ChatsCtrl', ChatsCtrl)
-  .controller('ChatDetailCtrl', ChatDetailCtrl)
-  .controller('AccountCtrl', AccountCtrl);
+  .controller('MapCtrl', MapCtrl)
+  .controller('SitesCtrl', SitesCtrl)
+  .controller('SiteDetailCtrl', SiteDetailCtrl)
+  .controller('ConfigCtrl', ConfigCtrl);
 
-DashCtrl.$inject = ['$scope', '$ionicLoading', 'uiGmapGoogleMapApi', '$timeout', '$cordovaGeolocation', '$ionicModal'];
-AccountCtrl.$inject = ['$scope'];
-ChatsCtrl.$inject = ['$scope', 'Chats'];
-ChatDetailCtrl.$inject = ['$scope', '$stateParams', 'Chats'];
+MapCtrl.$inject = ['$scope', '$ionicLoading', 'uiGmapGoogleMapApi', '$timeout', '$cordovaGeolocation', '$ionicModal'];
+ConfigCtrl.$inject = ['$scope'];
+SitesCtrl.$inject = ['$scope', 'Chats'];
+SiteDetailCtrl.$inject = ['$scope', '$stateParams', 'Chats'];
 
-function DashCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout, $cordovaGeolocation, $ionicModal) {
-
+function MapCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout, $cordovaGeolocation, $ionicModal) {
 
   //$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
 
@@ -93,24 +92,6 @@ function DashCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout, $cordovaG
       $scope.modal = modal
     });
 
-    //Yelp.search(position).then(function (data) {
-    //  console.log(data);
-    //  for (var i = 0; i < 10; i++) {
-    //    var business = data.data.businesses[i];
-    //    $scope.markers.push({
-    //      id: i,
-    //      name: business.name,
-    //      url: business.url,
-    //      location: {
-    //        latitude: business.location.coordinate.latitude,
-    //        longitude: business.location.coordinate.longitude
-    //      }
-    //    });
-    //  }
-    //}, function (error) {
-    //  console.log("Unable to access yelp");
-    //  console.log(error);
-    //});
   };
 
   $ionicLoading.show({
@@ -140,18 +121,18 @@ function DashCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout, $cordovaG
   }, 5000);
 }
 
-function ChatsCtrl($scope, Chats) {
+function SitesCtrl($scope, Chats) {
   $scope.chats = Chats.all();
   $scope.remove = function (chat) {
     Chats.remove(chat);
   };
 }
 
-function ChatDetailCtrl($scope, $stateParams, Chats) {
+function SiteDetailCtrl($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
 }
 
-function AccountCtrl($scope) {
+function ConfigCtrl($scope) {
   $scope.settings = {
     enableFriends: true
   };
