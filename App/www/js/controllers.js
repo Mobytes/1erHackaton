@@ -11,6 +11,13 @@ SiteDetailCtrl.$inject = ['$scope', '$stateParams', 'Chats'];
 
 function MapCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout, $cordovaGeolocation, $ionicModal) {
 
+  $scope.refresh = function () {
+    console.log('refresh');
+  };
+
+  $scope.locate = function () {
+    initMap();
+  };
   //$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
 
   $scope.markers = [];
@@ -27,6 +34,31 @@ function MapCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout, $cordovaGe
   $scope.hideInfo = function () {
     $scope.infoVisible = false;
   };
+
+
+  initMap();
+
+  //region INIT MAP
+  function initMap() {
+
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
+
+    uiGmapGoogleMapApi.then(function (maps) {
+      // Don't pass timeout parameter here; that is handled by setTimeout below
+      var posOptions = {enableHighAccuracy: false};
+      $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+        console.log("Got location: " + JSON.stringify(position));
+        $ionicLoading.hide();
+        initializeMap(position);
+      }, function (error) {
+        console.log(error);
+        $ionicLoading.hide();
+        initializeMap();
+      });
+    });
+  }
 
   var initializeMap = function (position) {
     if (!position) {
@@ -94,23 +126,7 @@ function MapCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout, $cordovaGe
 
   };
 
-  $ionicLoading.show({
-    template: 'Loading...'
-  });
-
-  uiGmapGoogleMapApi.then(function (maps) {
-    // Don't pass timeout parameter here; that is handled by setTimeout below
-    var posOptions = {enableHighAccuracy: false};
-    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-      console.log("Got location: " + JSON.stringify(position));
-      $ionicLoading.hide();
-      initializeMap(position);
-    }, function (error) {
-      console.log(error);
-      $ionicLoading.hide();
-      initializeMap();
-    });
-  });
+  //endregion
 
   // Deal with case where user does not make a selection
   $timeout(function () {
@@ -119,7 +135,9 @@ function MapCtrl($scope, $ionicLoading, uiGmapGoogleMapApi, $timeout, $cordovaGe
       initializeMap();
     }
   }, 5000);
+
 }
+
 
 function SitesCtrl($scope, Chats) {
   $scope.chats = Chats.all();
