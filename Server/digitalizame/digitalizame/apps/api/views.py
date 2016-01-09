@@ -36,7 +36,7 @@ class CategoryViewSet(DefaultViewSetMixin, viewsets.ModelViewSet):
 class SiteViewSet(DefaultViewSetMixin, viewsets.ModelViewSet):
     queryset = Site.objects.all()
     serializer_class = SiteSerializer
-    search_fields = ('description', 'tags', 'category', 'creator_by')
+    search_fields = ('description', 'tags')
     ordering_fields = '__all__'
 
     @transaction.atomic
@@ -48,12 +48,12 @@ class SiteViewSet(DefaultViewSetMixin, viewsets.ModelViewSet):
                 serializer_site.is_valid(raise_exception=True)
                 serializer_site.save()
 
-                picture = File(request.data['picture'])
+                picture = request.data['picture']
 
-                picture = {'picture': picture, 'site': serializer_site.data['id']}
-                serializer_picture = PictureSerializer(data=picture)
-                serializer_picture.is_valid(raise_exception=True)
-                serializer_picture.save()
+                # picture = {'picture': picture, 'site': serializer_site.data['id']}
+                # serializer_picture = PictureSerializer(data=picture)
+                # serializer_picture.is_valid(raise_exception=True)
+                # serializer_picture.save()
 
                 return Response({'status': "Ok"}, status=status.HTTP_200_OK)
 
